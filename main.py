@@ -8,6 +8,7 @@ from app.handlers.language import register_language_handlers
 from app.handlers.phishing import register_phishing_handlers
 from app.handlers.sos import register_sos_handlers
 from app.handlers.back import register_back_handlers
+from aiogram.dispatcher import FSMContext
 
 from app.utils.texts import TEXTS
 
@@ -27,8 +28,9 @@ register_sos_handlers(dp)
 register_back_handlers(dp)
 
 
-@dp.message_handler(commands=["start"])
-async def start(message: types.Message):
+@dp.message_handler(commands=["start"], state="*")
+async def start(message: types.Message, state: FSMContext):
+    await state.finish() # Сбрасываем любой зависший квиз или ввод пароля
     await message.answer(
         TEXTS["ru"]["start"],
         reply_markup=get_language_keyboard()

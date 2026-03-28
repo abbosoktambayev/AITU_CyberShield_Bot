@@ -70,7 +70,7 @@ def register_phishing_handlers(dp: Dispatcher):
 
         if idx >= len(questions):
             score = data["quiz_score"]
-            await state.finish()
+            await state.reset_state(with_data=False)
 
             # Формируем финальный текст из словаря
             finish_text = TEXTS[lang]["test_finished"].format(score=score, total=len(questions))
@@ -95,7 +95,7 @@ def register_phishing_handlers(dp: Dispatcher):
         data = await state.get_data()
         lang = data.get("lang", "ru")
 
-        await state.finish()
+        await state.reset_state(with_data=False)
         await call.message.answer(
             TEXTS[lang]["menu"],
             reply_markup=get_main_menu(lang)

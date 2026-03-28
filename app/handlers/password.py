@@ -41,7 +41,7 @@ def register_password_handlers(dp: Dispatcher):
                 TEXTS[lang]["menu"],
                 reply_markup=get_main_menu(lang)
             )
-            await state.finish()
+            await state.reset_state(with_data=False)
             return
 
         score = 0
@@ -81,4 +81,4 @@ def register_password_handlers(dp: Dispatcher):
             TEXTS[lang]["menu"],
             reply_markup=get_main_menu(lang)
         )
-        await state.finish()
+        await state.reset_state(with_data=False)
